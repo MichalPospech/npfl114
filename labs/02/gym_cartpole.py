@@ -6,13 +6,17 @@ import re
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.python import keras
+
 
 # Parse arguments
 # TODO: Set reasonable defaults and possibly add more arguments.
 parser = argparse.ArgumentParser()
-parser.add_argument("--batch_size", default=None, type=int, help="Batch size.")
-parser.add_argument("--epochs", default=None, type=int, help="Number of epochs.")
-parser.add_argument("--threads", default=1, type=int, help="Maximum number of threads to use.")
+parser.add_argument("--batch_size", default=1, type=int, help="Batch size.")
+parser.add_argument("--epochs", default=100, type=int,
+                    help="Number of epochs.")
+parser.add_argument("--threads", default=16, type=int,
+                    help="Maximum number of threads to use.")
 args = parser.parse_args()
 
 # Fix random seeds
@@ -25,7 +29,8 @@ tf.config.threading.set_intra_op_parallelism_threads(args.threads)
 args.logdir = os.path.join("logs", "{}-{}-{}".format(
     os.path.basename(__file__),
     datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S"),
-    ",".join(("{}={}".format(re.sub("(.)[^_]*_?", r"\1", key), value) for key, value in sorted(vars(args).items())))
+    ",".join(("{}={}".format(re.sub("(.)[^_]*_?", r"\1", key), value)
+              for key, value in sorted(vars(args).items())))
 ))
 
 # Load the data
@@ -37,19 +42,22 @@ with open("gym_cartpole-data.txt", "r") as data:
         labels.append(int(columns[-1]))
 observations, labels = np.array(observations), np.array(labels)
 
-# TODO: Create the model in the `model` variable.
-# However, beware that there is currently a bug in Keras which does
-# not correctly serialize InputLayer. Instead of using an InputLayer,
-# pass explicitly `input_shape` to the first real model layer.
-model = None
+
+inputs = tf.keras.layers.Input(shape=(4,))
+out = tf.keras.layers.Dense(
+    2, activation=tf.keras.activations.softmax)(inputs)
+
+
+model = tf.keras.Model(inputs=inputs, outputs=out)
 
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(),
+    optimizer=tf.keras.optimizers.Adam(decay=0.0001,lr=0.005),
     loss=tf.keras.losses.SparseCategoricalCrossentropy(),
     metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
 )
 
-tb_callback=tf.keras.callbacks.TensorBoard(args.logdir)
-model.fit(observations, labels, batch_size=args.batch_size, epochs=args.epochs, callbacks=[tb_callback])
+tb_callback = tf.keras.callbacks.TensorBoard(args.logdir)
+model.fit(observations, labels, batch_size=args.batch_size,
+          epochs=args.epochs, callbacks=[tb_callback])
 
 model.save("gym_cartpole_model.h5", include_optimizer=False)
