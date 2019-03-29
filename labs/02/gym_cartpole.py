@@ -6,7 +6,6 @@ import re
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.python import keras
 
 
 # Parse arguments
@@ -51,11 +50,11 @@ out = tf.keras.layers.Dense(
 model = tf.keras.Model(inputs=inputs, outputs=out)
 
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(decay=0.0001,lr=0.005),
+    optimizer=tf.keras.optimizers.Adam(decay=0.0001, lr=0.005),
     loss=tf.keras.losses.SparseCategoricalCrossentropy(),
     metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
 )
-
+print(model.summary())
 tb_callback = tf.keras.callbacks.TensorBoard(args.logdir)
 model.fit(observations, labels, batch_size=args.batch_size,
           epochs=args.epochs, callbacks=[tb_callback])

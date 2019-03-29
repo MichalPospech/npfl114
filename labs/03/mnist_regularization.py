@@ -67,7 +67,8 @@ for hidden_layer in args.hidden_layers:
     model.add(tf.keras.layers.Dense(hidden_layer, activation=tf.nn.relu,
                                     kernel_regularizer=rg, bias_regularizer=rg))
     model.add(tf.keras.layers.Dropout(rate=args.dropout))
-model.add(tf.keras.layers.Dense(MNIST.LABELS,kernel_regularizer=rg, bias_regularizer=rg))
+model.add(tf.keras.layers.Dense(MNIST.LABELS,
+                                kernel_regularizer=rg, bias_regularizer=rg))
 
 
 loss = tf.keras.losses.CategoricalCrossentropy(
