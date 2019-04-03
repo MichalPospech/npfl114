@@ -31,7 +31,6 @@ m = tf.keras.Sequential([
         tf.keras.layers.Dense(MNIST.LABELS, activation=tf.nn.softmax),
     ])
 
-
 # Load data
 mnist = MNIST()
 input_layer = tf.keras.Input(
