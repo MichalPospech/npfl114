@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/michal/miniconda3/envs/deep-learning/bin/python"
+    "python.pythonPath": "/home/michal/miniconda3/envs/deep-learning/bin/python",
+    "python.linting.enabled": false
 }
