@@ -14,6 +14,7 @@ class CIFAR10:
         def __init__(self, data, shuffle_batches, seed=42):
             self._data = data
             self._data["images"] = self._data["images"].astype(np.float32) / 255
+            self._data["images"] = np.transpose(self._data["images"], [0,3,2,1]) # transfor to CHW
             self._size = len(self._data["images"])
 
             self._shuffler = np.random.RandomState(seed) if shuffle_batches else None
@@ -48,3 +49,9 @@ class CIFAR10:
         for dataset in ["train", "dev", "test"]:
             data = dict((key[len(dataset) + 1:], cifar[key]) for key in cifar if key.startswith(dataset))
             setattr(self, dataset, self.Dataset(data, shuffle_batches=dataset == "train"))
+        # self.train.data["images"] = np.concatenate((self.train.data["images"], np.rot90(self.train.data["images"],1,(3,2)), np.rot90(self.train.data["images"],4,(3,2)), np.rot90(self.train.data["images"],3,(3,2))))
+        self.train.data["images"] = np.concatenate((self.train.data["images"], np.flip(self.train.data["images"],2)))
+        
+        self.train.data["labels"] = np.concatenate((self.train.data["labels"],self.train.data["labels"]))
+        
+        # self.train.data["labels"] = np.concatenate((self.train.data["labels"],self.train.data["labels"],self.train.data["labels"],self.train.data["labels"]))

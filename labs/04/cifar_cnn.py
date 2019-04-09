@@ -4,6 +4,7 @@ import tensorflow as tf
 from re import compile, match
 from mnist import MNIST
 from functools import reduce
+from cifar10 import CIFAR10
 # The neural network model
 # Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR without following lines, solution from https://github.com/tensorflow/tensorflow/issues/24496#issuecomment-464909727
 from tensorflow.compat.v1 import ConfigProto
@@ -132,7 +133,7 @@ if __name__ == "__main__":
     ))
 
     # Load the data
-    mnist = MNIST()
+    mnist = CIFAR10()
 
     # Create the network and train
     network = Network(args)
