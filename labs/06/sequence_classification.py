@@ -51,11 +51,15 @@ class Dataset:
 
 class Network:
     def __init__(self, args):
-        sequences = tf.keras.layers.Input(
-            shape=[args.sequence_length, args.sequence_dim])
-        # TODO: Process the sequence using the given `args.rnn_cell` RNN cell,
-        # with dimensionality `args.rnn_cell_dim`. Use `return_sequences=True`
+        sequences = tf.keras.layers.Input(shape=[args.sequence_length, args.sequence_dim])
+        # TODO: Process the sequence using a RNN with cell type `args.rnn_cell`
+        # and with dimensionality `args.rnn_cell_dim`. Use `return_sequences=True`
         # to get outputs for all sequence elements.
+        #
+        # Prefer `tf.keras.layers.LSTM` (and analogously for `GRU` and
+        # `SimpleRNN`) to `tf.keras.layers.RNN` wrapper with
+        # `tf.keras.layers.LSTMCell` (the former can run transparently on a GPU
+        # and is also considerably faster on a CPU).
 
         # rnn_cell
         if args.rnn_cell == "SimpleRNN":
@@ -223,8 +227,6 @@ if __name__ == "__main__":
                         type=int, help="Number of testing sequences.")
     parser.add_argument("--threads", default=1, type=int,
                         help="Maximum number of threads to use.")
-    parser.add_argument("--train_sequences", default=10000,
-                        type=int, help="Number of training sequences.")
     args = parser.parse_args()
 
     # Fix random seeds and number of threads
