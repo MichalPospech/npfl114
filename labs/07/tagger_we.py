@@ -96,12 +96,18 @@ if __name__ == "__main__":
     np.random.seed(42)
     tf.random.set_seed(42)
     if args.recodex:
+<<<<<<< HEAD
         tf.keras.utils.get_custom_objects(
         )["glorot_uniform"] = lambda: tf.keras.initializers.glorot_uniform(seed=42)
         tf.keras.utils.get_custom_objects(
         )["orthogonal"] = lambda: tf.keras.initializers.orthogonal(seed=42)
         tf.keras.utils.get_custom_objects(
         )["uniform"] = lambda: tf.initializers.RandomUniform(seed=42)
+=======
+        tf.keras.utils.get_custom_objects()["glorot_uniform"] = lambda: tf.initializers.glorot_uniform(seed=42)
+        tf.keras.utils.get_custom_objects()["orthogonal"] = lambda: tf.initializers.orthogonal(seed=42)
+        tf.keras.utils.get_custom_objects()["uniform"] = lambda: tf.initializers.RandomUniform(seed=42)
+>>>>>>> 42760170db12b456e6182a8c4411e9e307ae3f0a
     tf.config.threading.set_inter_op_parallelism_threads(args.threads)
     tf.config.threading.set_intra_op_parallelism_threads(args.threads)
 
