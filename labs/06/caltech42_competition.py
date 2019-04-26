@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+#e99f6192-a850-11e7-a937-00505601122b
+#ddb5d1e7-ace9-11e7-a937-00505601122b
+#7f0a197b-bc00-11e7-a937-00505601122b
+
+# We used 3 different models, put their results together (IAA ~ 92%) and manually labeled samples where our models did not agree. 
+
+
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as tfhub  # Note: you need to install tensorflow_hub
