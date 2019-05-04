@@ -1,14 +1,12 @@
-### Assignment: tagger_competition
-#### Date: Deadline: May 5, 23:59
+### Assignment: lemmatizer_competition
+#### Date: Deadline: May 12, 23:59
 #### Points: 5-13 points
 
 In this assignment, you should extend
-[`tagger_we`](#tagger_we)/[`tagger_cle_rnn`](#tagger_cle_rnn)/[`tagger_cle_cnn`](#tagger_cle_cnn)
-into a real-world Czech part-of-speech tagger. We will use
-Czech PDT dataset loadable using the [morpho_dataset.py](https://github.com/ufal/npfl114/tree/master/labs/08/morpho_dataset.py)
-module. Note that the dataset contains more than 1500 unique POS tags and that
-the POS tags have a fixed structure of 15 positions (so it is possible to
-generate the POS tag characters independently).
+[`lemmatizer_noattn`](#lemmatizer_noattn)/[`lemmatizer_attn`](#lemmatizer_attn)
+into a real-world Czech lemmatizer. We will again use
+Czech PDT dataset loadable using the [morpho_dataset.py](https://github.com/ufal/npfl114/tree/master/labs/09/morpho_dataset.py)
+module.
 
 You can use the following additional data in this assignment:
 - You can use outputs of a morphological analyzer loadable with
@@ -24,14 +22,13 @@ Explicitly, submit **exactly one .txt file** and **at least one .py file**.
 **Note that all `.zip` files you submit will be extracted first.**
 
 The task is also a _competition_. Everyone who submits a solution which achieves
-at least 92% label accuracy will get 5 points; the rest 5 points will be distributed
+at least 92% accuracy will get 5 points; the rest 5 points will be distributed
 depending on relative ordering of your solutions. Lastly, **3 bonus points**
 will be given to anyone surpassing pre-neural-network state-of-the-art
-of 95.89% from [Spoustová et al., 2009](http://www.aclweb.org/anthology/E09-1087).
-You can evaluate generated file against a golden text file using the
+of 97.86%. You can evaluate generated file against a golden text file using the
 [morpho_evaluator.py](https://github.com/ufal/npfl114/tree/master/labs/08/morpho_evaluator.py)
 module.
 
 You can start with the
-[tagger_competition.py](https://github.com/ufal/npfl114/tree/master/labs/08/tagger_competition.py)
+[lemmatizer_competition.py](https://github.com/ufal/npfl114/tree/master/labs/09/lemmatizer_competition.py)
 template, which among others generates test set annotations in the required format.
