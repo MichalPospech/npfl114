@@ -41,7 +41,7 @@ class Network:
         # TODO(we): Embed input words with dimensionality `args.we_dim`, using
         # `mask_zero=True`.
         gather = tf.keras.layers.Lambda(
-            lambda args: tf.gather(*args))([gru_cell, charseq_ids])
+            lambda args: tf.gather_nd(*args))((gru_cell, charseq_ids))
 
         # TODO: Concatenate the WE and CLE embeddings (in this order).
         words_embedding = tf.keras.layers.Embedding(
@@ -184,18 +184,15 @@ if __name__ == "__main__":
     np.random.seed(42)
     tf.random.set_seed(42)
     if args.recodex:
-<<<<<<< HEAD
         tf.keras.utils.get_custom_objects(
         )["glorot_uniform"] = lambda: tf.initializers.glorot_uniform(seed=42)
         tf.keras.utils.get_custom_objects(
         )["orthogonal"] = lambda: tf.initializers.orthogonal(seed=42)
         tf.keras.utils.get_custom_objects(
         )["uniform"] = lambda: tf.initializers.RandomUniform(seed=42)
-=======
         tf.keras.utils.get_custom_objects()["glorot_uniform"] = lambda: tf.initializers.glorot_uniform(seed=42)
         tf.keras.utils.get_custom_objects()["orthogonal"] = lambda: tf.initializers.orthogonal(seed=42)
         tf.keras.utils.get_custom_objects()["uniform"] = lambda: tf.initializers.RandomUniform(seed=42)
->>>>>>> 42760170db12b456e6182a8c4411e9e307ae3f0a
     tf.config.threading.set_inter_op_parallelism_threads(args.threads)
     tf.config.threading.set_intra_op_parallelism_threads(args.threads)
 
